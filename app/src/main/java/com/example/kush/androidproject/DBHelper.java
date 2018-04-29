@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    final static int DATABASE_VERSION = 2;
+    final static int DATABASE_VERSION = 1;
     String id;
 
     public DBHelper(Context context, String id) {
@@ -25,7 +25,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "  _id         integer primary key autoincrement," +
                 "  price       integer not null," +
                 "  date," +
-                "  cus)";
+                "  cuz)";
 
         db.execSQL(sql);
 

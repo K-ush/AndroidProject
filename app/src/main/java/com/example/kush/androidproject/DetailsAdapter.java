@@ -29,6 +29,7 @@ public class DetailsAdapter extends ArrayAdapter<DetailsVO> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        // 인자값으로 들어온 ConvertView가 null => 새로만듦
         if (convertView == null){
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(resID, null);
@@ -42,6 +43,7 @@ public class DetailsAdapter extends ArrayAdapter<DetailsVO> {
         TextView inout = holder.inout;
         TextView price = holder.price;
 
+        // 아래에서 생성자에의해 초기화된 datas에서 알맞은 index의 vo를 추출
         final DetailsVO vo = datas.get(position);
         date.setText(vo.getDate());
         inout.setText(vo.isInout()?"입금":"출금");

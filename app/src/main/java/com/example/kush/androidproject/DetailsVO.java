@@ -4,6 +4,8 @@ package com.example.kush.androidproject;
  * Created by kush on 2018. 4. 23..
  */
 
+// vo객체
+
 public class DetailsVO {
     private int _id;
     private boolean inout;

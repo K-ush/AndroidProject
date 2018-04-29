@@ -38,9 +38,11 @@ public class DirectoryActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_directory);
 
+        // Intent와 함께 전달된 extras에서 id값 추출
         Intent intent = getIntent();
-        id = intent.getExtras().getString("id");
+        id = intent.getExtras().getString("user");
 
+        //DetailsVO를 담을 array 객체 생성
         array = new ArrayList<>();
 
         helper = new DBHelper(this, id);
@@ -55,15 +57,18 @@ public class DirectoryActivity extends AppCompatActivity{
             vo.set_id(cursor.getInt(0));
             vo.setInout(price > 0 ? true : false);
             vo.setPrice(price > 0 ? price : (-1*price));
-            vo.setDate(cursor.getString(2));
+            vo.setDate(cursor.getString(1));
 
             array.add(vo);
         }
 
         list = (ListView) findViewById(R.id.listItems);
+        //ListView에 붙일 Adapter 객체 초기화
         adapter = new DetailsAdapter(this, R.layout.activity_details_item, array);
+        // 부착
         list.setAdapter(adapter);
 
+        //ListView에 클릭리스터 장착 -> 요소 클릭시 수정가능한 Activity로 이동
         list.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -80,16 +85,17 @@ public class DirectoryActivity extends AppCompatActivity{
             }
         });
 
+        // add버튼에 클릭리스너 장착 -> 새로운 값을 db에 삽입
         add = (Button)findViewById(R.id.add);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bundle dataBundle = new Bundle();
                 dataBundle.putInt("id", 0);
+                dataBundle.putString("dbName", id);
                 dataBundle.putBoolean("isNew", true);
                 Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
                 intent.putExtras(dataBundle);
-                intent.putExtra("dbName", id);
                 startActivity(intent);
             }
         });
@@ -103,5 +109,35 @@ public class DirectoryActivity extends AppCompatActivity{
 
 
         db.close();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        array.clear();
+        helper = new DBHelper(this, id);
+        db = helper.getReadableDatabase();
+
+        int totalPrice = 0;
+        cursor = db.rawQuery("SELECT _id, price, date, cuz, sum(price) from tb_" + id, null);
+
+        while(cursor.moveToNext()){
+            DetailsVO vo = new DetailsVO();
+
+            vo.set_id(cursor.getInt(0));
+            vo.setPrice(cursor.getInt(1));
+            vo.setDate(cursor.getString(2));
+            vo.setCuz(cursor.getString(3));
+
+            totalPrice = cursor.getInt(4);
+
+            array.add(vo);
+        }
+
+        total.setText(totalPrice+"원");
+        db.close();
+        adapter.addAll(array);
+        adapter.notifyDataSetChanged();
     }
 }

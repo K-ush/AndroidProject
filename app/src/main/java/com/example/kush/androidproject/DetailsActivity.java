@@ -33,8 +33,6 @@ public class DetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_details);
 
         Intent intent = new Intent();
-        id = intent.getExtras().getString("dbName");
-
 
         editPrice = (EditText)findViewById(R.id.editPrice);
         editCuz = (EditText)findViewById(R.id.editCuz);
@@ -46,6 +44,7 @@ public class DetailsActivity extends AppCompatActivity {
         helper = new DBHelper(this, id);
 
         Bundle extras = getIntent().getExtras();
+        id = extras.getString("dbName");
         if(extras != null){
             isNew = extras.getBoolean("isNew");
             if(isNew) {
@@ -53,10 +52,12 @@ public class DetailsActivity extends AppCompatActivity {
                 btnDelete.setVisibility(View.INVISIBLE);
             } else{
                 itemId = extras.getInt("id");
+                id = extras.getString("dbName");
                 btnSave.setVisibility(View.INVISIBLE);
 
                 db = helper.getWritableDatabase();
-                String strSQL = "SELECT price, cus FROM tb_"+ id + " where _id = " + Integer.toString(itemId) + ";";
+                id="kush";
+                String strSQL = "SELECT price, cuz FROM tb_"+ id + " where _id = " + Integer.toString(itemId) + ";";
 
                 cursor = db.rawQuery(strSQL, null);
 
@@ -65,16 +66,14 @@ public class DetailsActivity extends AppCompatActivity {
                 while(cursor.moveToNext()){
 
                     int price = cursor.getInt(0);
-
                     vo.setInout(price > 0 ? true : false);
                     vo.setPrice(price > 0 ? price : (-1*price));
-
                     vo.setCuz(cursor.getString(1));
                 }
 
                 cursor = db.rawQuery("select sum(price) from tb_" + id, null);
 
-                editPrice.setText(vo.getPrice());
+                editPrice.setText(vo.getPrice()+"");
                 editCuz.setText(vo.getCuz());
 
                 db.close();
@@ -92,7 +91,9 @@ public class DetailsActivity extends AppCompatActivity {
         db = helper.getWritableDatabase();
 
         String strSQL = "insert into tb_" + id + " (price, date, cuz) values(?,?,?)";
-        db.execSQL(strSQL, new String[]{price, Calendar.MONTH + "/" + Calendar.DATE , cuz});
+        int month = Calendar.getInstance().get(Calendar.MONTH) + 1;
+        int date = Calendar.getInstance().get(Calendar.DATE);
+        db.execSQL(strSQL, new String[]{price, month + "/" + date , cuz});
 
         db.close();
 
@@ -131,5 +132,7 @@ public class DetailsActivity extends AppCompatActivity {
         db.close();
 
         Toast.makeText(getApplicationContext(), "삭제되었습니다", Toast.LENGTH_SHORT).show();
+
+        finish();
     }
 }
