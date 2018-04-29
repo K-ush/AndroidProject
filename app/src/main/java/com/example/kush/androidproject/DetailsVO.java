@@ -4,13 +4,17 @@ package com.example.kush.androidproject;
  * Created by kush on 2018. 4. 23..
  */
 
-public class UserVO {
+public class DetailsVO {
     private int _id;
     private boolean inout;
     private int price;
     private String date;
 
-    public UserVO(int _id, boolean inout, int price, String date) {
+    public DetailsVO(){
+
+    }
+
+    public DetailsVO(int _id, boolean inout, int price, String date) {
         this._id = _id;
         this.inout = inout;
         this.price = price;

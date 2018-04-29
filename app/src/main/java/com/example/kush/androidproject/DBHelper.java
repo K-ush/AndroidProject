@@ -11,32 +11,30 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DBHelper extends SQLiteOpenHelper {
 
     final static int DATABASE_VERSION = 1;
-    String name;
+    String id;
 
-    public DBHelper(Context context, String name) {
+    public DBHelper(Context context, String id) {
         super(context, "codeDB", null, DATABASE_VERSION);
-        this.name = name;
+        this.id = id;
     }
 
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "create table tb_" + name + "("+
-                     "  _id         integer primary key autoincrement," +
-                     "  userid      unique not null," +
-                     "  userpass    not null," +
-                     "  name        not null)";
+        String sql = "create table tb_" + id + "(" +
+                "  _id         integer primary key autoincrement," +
+                "  inout       integer," +
+                "  price       integer," +
+                "  date        TIMESTAMP DEFAULT CURRENT_TIMESTAMP )";
 
         db.execSQL(sql);
 
-
-        db.execSQL(sql);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        if(i1 == DATABASE_VERSION){
-            db.execSQL("drop table tb_user");
+        if (i1 == DATABASE_VERSION) {
+            db.execSQL("drop table tb_" + id);
             onCreate(db);
         }
     }

@@ -3,9 +3,6 @@ package com.example.kush.androidproject;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -94,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if ("".equals(sp.getString(st_id, ""))) {
                         SharedPreferences.Editor editor = sp.edit();
                         editor.putString(st_id, st_pass);
+                        editor.putString(st_id+"_name", st_name);
 
                         editor.commit();
                         Toast.makeText(this, "회원가입 완료!", Toast.LENGTH_SHORT).show();
@@ -122,12 +120,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // 공유프리퍼런스에서 가져오는 값과 입력된 비밀번호가 같을때 true
                 boolean login = st_pass.equals(sp.getString(st_id, "")) ? true : false;
 
+                st_name = sp.getString(st_id+"_name", "");
                 if(login){
                     Toast.makeText(this, "어서오세요. " + st_name + "님", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), DirectoryActivity.class);
                     // intent에 로그인한 유저의 정보를 넣어서 전달
                     intent.putExtra("user", st_id);
-                    intent.putExtra("name", st_name);
                     startActivity(intent);
 
                 } else{
