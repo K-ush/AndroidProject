@@ -9,16 +9,18 @@ public class DetailsVO {
     private boolean inout;
     private int price;
     private String date;
+    private String cuz;
 
     public DetailsVO(){
 
     }
 
-    public DetailsVO(int _id, boolean inout, int price, String date) {
+    public DetailsVO(int _id, boolean inout, int price, String date, String cuz) {
         this._id = _id;
         this.inout = inout;
         this.price = price;
         this.date = date;
+        this.cuz = cuz;
     }
 
     public int get_id() {
@@ -52,4 +54,8 @@ public class DetailsVO {
     public void setDate(String date) {
         this.date = date;
     }
+
+    public String getCuz() { return cuz; }
+
+    public void setCuz(String cuz) { this.cuz = cuz; }
 }

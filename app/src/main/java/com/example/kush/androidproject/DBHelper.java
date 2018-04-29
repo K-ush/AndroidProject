@@ -24,7 +24,8 @@ public class DBHelper extends SQLiteOpenHelper {
         String sql = "create table tb_" + id + "(" +
                 "  _id         integer primary key autoincrement," +
                 "  price       integer not null," +
-                "  date        TIMESTAMP DEFAULT CURRENT_TIMESTAMP )";
+                "  date," +
+                "  cus)";
 
         db.execSQL(sql);
 
