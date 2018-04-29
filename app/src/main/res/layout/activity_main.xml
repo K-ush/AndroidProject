@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    tools:context="com.example.kush.androidproject.MainActivity">
+
+    <TextView
+        android:id="@+id/textId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/insertID"
+        android:layout_alignBottom="@+id/insertID"
+        android:layout_alignEnd="@+id/textView"
+        android:text="아이디 : "
+        android:textSize="15dp" />
+
+    <EditText
+        android:id="@+id/insertID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/insertPASS"
+        android:layout_toEndOf="@+id/HcenterLine" />
+
+    <TextView
+        android:id="@+id/HcenterLine"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="5dp"
+        />
+    <TextView
+        android:id="@+id/VcenterLine"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+
+        android:layout_alignBaseline="@+id/insertPASS"
+        android:layout_alignBottom="@+id/insertPASS"
+        android:layout_alignEnd="@+id/HcenterLine"
+        android:text="패스워드 : "
+        android:textSize="15dp" />
+
+    <EditText
+        android:id="@+id/insertPASS"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+
+        android:layout_above="@+id/VcenterLine"
+        android:layout_toEndOf="@+id/HcenterLine"
+        android:inputType="textPassword" />
+
+
+    <TextView
+        android:id="@+id/textName"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+
+        android:layout_alignBaseline="@+id/insertName"
+        android:layout_alignBottom="@+id/insertName"
+        android:layout_alignEnd="@+id/textView"
+        android:text="이름 : " />
+
+    <EditText
+        android:id="@+id/insertName"
+        android:layout_width="100dp"
+        android:layout_height="1dp"
+
+        android:layout_below="@+id/insertPASS"
+        android:layout_toEndOf="@+id/HcenterLine"/>
+    <Button
+        android:id="@+id/signUP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignEnd="@+id/HcenterLine"
+        android:layout_below="@+id/textName"
+        android:layout_marginTop="6dp"
+        android:text="회원가입" />
+
+    <Button
+        android:id="@+id/signIN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/signUP"
+        android:layout_alignBottom="@+id/signUP"
+        android:layout_toEndOf="@+id/signUP"
+        android:text="로그인" />
+</RelativeLayout>
