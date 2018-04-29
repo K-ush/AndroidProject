@@ -20,7 +20,7 @@ public class DirectoryActivity extends AppCompatActivity{
     SQLiteDatabase db;
     Cursor cursor;
 
-    Adapter adapter;
+    DetailsAdapter adapter;
 
     Button date[], add;
 
@@ -38,21 +38,25 @@ public class DirectoryActivity extends AppCompatActivity{
 
         helper = new DBHelper(this, id);
         db = helper.getReadableDatabase();
-        cursor = db.rawQuery("select inout, price, date from tb_" + id + " order by _id", null);
+        cursor = db.rawQuery("select price, date from tb_" + id + " order by _id", null);
 
         while(cursor.moveToNext()){
             DetailsVO vo = new DetailsVO();
 
+            int price = cursor.getInt(1);
+
             vo.set_id(cursor.getInt(0));
-            vo.setInout(cursor.getInt(1)==1);
-            vo.setPrice(cursor.getInt(2));
-            vo.setDate(cursor.getString(3));
+            vo.setInout(price > 0 ? true : false);
+            vo.setPrice(price > 0 ? price : (-1*price));
+            vo.setDate(cursor.getString(2));
 
             array.add(vo);
         }
         db.close();
 
         list = (ListView) findViewById(R.id.listItems);
+        adapter = new DetailsAdapter(this, R.layout.activity_details_item, array);
+        list.setAdapter(adapter);
 
     }
 }

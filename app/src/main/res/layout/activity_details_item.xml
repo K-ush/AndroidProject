@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    tools:context="com.example.kush.androidproject.DetailsItemActivity">
+
+    <TextView
+        android:id="@+id/showDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+
+        android:textSize="30dp"
+        android:text="xx/xx"
+        />
+
+    <TextView
+        android:id="@+id/inout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+
+        android:layout_toRightOf="@id/showDate"
+
+        android:textSize="30dp"
+        android:text="지출"/>
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+
+        android:layout_toRightOf="@id/inout"
+
+        android:text="10000원"
+        android:textSize="30dp"
+        />
+
+</LinearLayout>

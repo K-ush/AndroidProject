@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    final static int DATABASE_VERSION = 1;
+    final static int DATABASE_VERSION = 2;
     String id;
 
     public DBHelper(Context context, String id) {
@@ -23,8 +23,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String sql = "create table tb_" + id + "(" +
                 "  _id         integer primary key autoincrement," +
-                "  inout       integer," +
-                "  price       integer," +
+                "  price       integer not null," +
                 "  date        TIMESTAMP DEFAULT CURRENT_TIMESTAMP )";
 
         db.execSQL(sql);

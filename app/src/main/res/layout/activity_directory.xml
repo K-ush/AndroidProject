@@ -61,6 +61,7 @@
             android:layout_gravity="center_vertical"
             />
         <TextView
+            android:id="@+id/addDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="total : 0원"
