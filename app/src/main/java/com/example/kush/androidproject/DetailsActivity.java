@@ -32,8 +32,6 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
-        Intent intent = new Intent();
-
         editPrice = (EditText)findViewById(R.id.editPrice);
         editCuz = (EditText)findViewById(R.id.editCuz);
 
@@ -52,12 +50,10 @@ public class DetailsActivity extends AppCompatActivity {
                 btnDelete.setVisibility(View.INVISIBLE);
             } else{
                 itemId = extras.getInt("id");
-                id = extras.getString("dbName");
                 btnSave.setVisibility(View.INVISIBLE);
 
                 db = helper.getWritableDatabase();
-                id="kush";
-                String strSQL = "SELECT price, cuz FROM tb_"+ id + " where _id = " + Integer.toString(itemId) + ";";
+                String strSQL = "SELECT _id, price, cuz FROM tb_"+ id + " where _id = " + Integer.toString(itemId) + ";";
 
                 cursor = db.rawQuery(strSQL, null);
 
@@ -65,13 +61,12 @@ public class DetailsActivity extends AppCompatActivity {
 
                 while(cursor.moveToNext()){
 
-                    int price = cursor.getInt(0);
+                    int _id = cursor.getInt(0);
+                    int price = cursor.getInt(1);
                     vo.setInout(price > 0 ? true : false);
                     vo.setPrice(price > 0 ? price : (-1*price));
-                    vo.setCuz(cursor.getString(1));
+                    vo.setCuz(cursor.getString(2));
                 }
-
-                cursor = db.rawQuery("select sum(price) from tb_" + id, null);
 
                 editPrice.setText(vo.getPrice()+"");
                 editCuz.setText(vo.getCuz());
@@ -86,6 +81,7 @@ public class DetailsActivity extends AppCompatActivity {
         String price, cuz;
 
         price = editPrice.getText().toString();
+        
         cuz = editCuz.getText().toString();
 
         db = helper.getWritableDatabase();

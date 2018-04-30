@@ -18,19 +18,15 @@ import java.util.ArrayList;
 public class DirectoryActivity extends AppCompatActivity{
 
     ListView list;
+    DetailsAdapter adapter;
+    Button add;
+    TextView total;
 
     DBHelper helper;
     SQLiteDatabase db;
     Cursor cursor;
 
-    DetailsAdapter adapter;
-
-    Button add;
-
-    TextView total;
-
     String id;
-
     ArrayList<DetailsVO> array;
 
     @Override
@@ -38,16 +34,17 @@ public class DirectoryActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_directory);
 
+        list = (ListView) findViewById(R.id.listItems);
+
         // Intent와 함께 전달된 extras에서 id값 추출
-        Intent intent = getIntent();
-        id = intent.getExtras().getString("user");
+        id = getIntent().getExtras().getString("user");
 
         //DetailsVO를 담을 array 객체 생성
         array = new ArrayList<>();
 
         helper = new DBHelper(this, id);
         db = helper.getReadableDatabase();
-        cursor = db.rawQuery("select price, date from tb_" + id + " order by _id", null);
+        cursor = db.rawQuery("select _id, price, date from tb_" + id + " order by _id", null);
 
         while(cursor.moveToNext()){
             DetailsVO vo = new DetailsVO();
@@ -57,12 +54,11 @@ public class DirectoryActivity extends AppCompatActivity{
             vo.set_id(cursor.getInt(0));
             vo.setInout(price > 0 ? true : false);
             vo.setPrice(price > 0 ? price : (-1*price));
-            vo.setDate(cursor.getString(1));
+            vo.setDate(cursor.getString(2));
 
             array.add(vo);
         }
 
-        list = (ListView) findViewById(R.id.listItems);
         //ListView에 붙일 Adapter 객체 초기화
         adapter = new DetailsAdapter(this, R.layout.activity_details_item, array);
         // 부착
@@ -120,7 +116,7 @@ public class DirectoryActivity extends AppCompatActivity{
         db = helper.getReadableDatabase();
 
         int totalPrice = 0;
-        cursor = db.rawQuery("SELECT _id, price, date, cuz, sum(price) from tb_" + id, null);
+        cursor = db.rawQuery("SELECT _id, price, date, cuz from tb_" + id, null);
 
         while(cursor.moveToNext()){
             DetailsVO vo = new DetailsVO();
@@ -130,9 +126,11 @@ public class DirectoryActivity extends AppCompatActivity{
             vo.setDate(cursor.getString(2));
             vo.setCuz(cursor.getString(3));
 
-            totalPrice = cursor.getInt(4);
-
             array.add(vo);
+        }
+        cursor = db.rawQuery("SELECT sum(price) from tb_" + id, null);
+        while(cursor.moveToNext()){
+            totalPrice = cursor.getInt(0);
         }
 
         total.setText(totalPrice+"원");
