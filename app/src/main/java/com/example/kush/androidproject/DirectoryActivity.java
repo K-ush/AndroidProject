@@ -43,6 +43,7 @@ public class DirectoryActivity extends AppCompatActivity{
         array = new ArrayList<>();
 
         helper = new DBHelper(this, id);
+        helper.onCreate(db);
         db = helper.getReadableDatabase();
         cursor = db.rawQuery("select _id, price, date from tb_" + id + " order by _id", null);
 

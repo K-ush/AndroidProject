@@ -81,7 +81,7 @@ public class DetailsActivity extends AppCompatActivity {
         String price, cuz;
 
         price = editPrice.getText().toString();
-        
+
         cuz = editCuz.getText().toString();
 
         db = helper.getWritableDatabase();
